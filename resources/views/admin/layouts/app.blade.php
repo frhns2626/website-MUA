@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Admin Panel') - Firliamakeup</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        /* Sidebar mobile animation */
+        @media (max-width: 767px) {
+            #sidebar {
+                box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        /* Prevent body scroll when sidebar is open on mobile */
+        @media (max-width: 767px) {
+            body.sidebar-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex flex-col md:flex-row">
+        <!-- Sidebar -->
+        @include('components.sidebar')
+
+        <!-- Overlay for mobile -->
+        <div id="sidebar-overlay" class="hidden md:hidden fixed inset-0 backdrop-blur-sm bg-white/20 z-30 transition-opacity duration-300"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col md:ml-64 min-h-screen">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-30">
+                <div class="px-3 sm:px-4 md:px-6 lg:px-8 py-3 md:py-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <!-- Mobile: Show menu button and title -->
+                        <div class="flex items-center gap-3 md:hidden">
+                            <button id="mobile-menu-toggle" class="text-gray-700 hover:text-gray-900 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Desktop: Header actions -->
+                        <div class="hidden md:flex items-center gap-3 md:gap-4 flex-1 justify-end">
+                            @hasSection('header-actions')
+                                <div class="flex items-center gap-2">
+                                    @yield('header-actions')
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <!-- Profile Dropdown -->
+                        <div class="relative">
+                            <button id="profile-dropdown-toggle" class="flex items-center justify-center gap-2 sm:px-3 sm:py-2 sm:bg-white sm:rounded-lg sm:border sm:border-gray-300 hover:sm:border-gray-400 transition-all cursor-pointer sm:shadow-sm">
+                                <div class="w-10 h-10 sm:w-8 sm:h-8 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0 border-2 border-white shadow-md">
+                                    <svg class="w-6 h-6 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <div class="hidden sm:block text-left">
+                                    <p class="text-sm font-semibold text-gray-900 leading-tight">Admin</p>
+                                    <p class="text-xs text-gray-600 leading-tight">Firliamakeup</p>
+                                </div>
+                                <svg id="dropdown-arrow" class="w-4 h-4 text-gray-600 hidden sm:block transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 sm:w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-1 z-50 overflow-hidden">
+                                <form method="POST" action="{{ route('admin.logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-3 transition-colors">
+                                        <svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                        </svg>
+                                        <span class="text-red-600 font-medium">Logout</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile: Header actions below -->
+                    @hasSection('header-actions')
+                        <div class="md:hidden mt-3">
+                            @yield('header-actions')
+                        </div>
+                    @endif
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 p-3 sm:p-4 md:p-6 lg:p-8 overflow-y-auto bg-gray-50">
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const sidebarClose = document.getElementById('sidebar-close');
+
+        function openSidebar() {
+            sidebar?.classList.remove('-translate-x-full');
+            sidebarOverlay?.classList.remove('hidden');
+            document.body.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            sidebar?.classList.add('-translate-x-full');
+            sidebarOverlay?.classList.add('hidden');
+            document.body.classList.remove('sidebar-open');
+        }
+
+        mobileMenuToggle?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openSidebar();
+        });
+
+        sidebarClose?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeSidebar();
+        });
+
+        // Close sidebar when clicking overlay
+        sidebarOverlay?.addEventListener('click', function() {
+            closeSidebar();
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth < 768) {
+                if (sidebar && !sidebar.contains(e.target) && !mobileMenuToggle?.contains(e.target)) {
+                    if (!sidebar.classList.contains('-translate-x-full')) {
+                        closeSidebar();
+                    }
+                }
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                sidebar?.classList.remove('-translate-x-full');
+                sidebarOverlay?.classList.add('hidden');
+                document.body.classList.remove('sidebar-open');
+            } else {
+                if (!sidebar?.classList.contains('-translate-x-full')) {
+                    closeSidebar();
+                }
+            }
+        });
+
+        // Profile dropdown toggle
+        const profileDropdownToggle = document.getElementById('profile-dropdown-toggle');
+        const profileDropdownMenu = document.getElementById('profile-dropdown-menu');
+        const dropdownArrow = document.getElementById('dropdown-arrow');
+
+        profileDropdownToggle?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isHidden = profileDropdownMenu?.classList.contains('hidden');
+            
+            if (isHidden) {
+                profileDropdownMenu?.classList.remove('hidden');
+                profileDropdownMenu?.classList.add('animate-fadeIn');
+                dropdownArrow?.classList.add('rotate-180');
+            } else {
+                profileDropdownMenu?.classList.add('hidden');
+                profileDropdownMenu?.classList.remove('animate-fadeIn');
+                dropdownArrow?.classList.remove('rotate-180');
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (profileDropdownToggle && profileDropdownMenu) {
+                if (!profileDropdownToggle.contains(e.target) && !profileDropdownMenu.contains(e.target)) {
+                    profileDropdownMenu.classList.add('hidden');
+                    profileDropdownMenu.classList.remove('animate-fadeIn');
+                    dropdownArrow?.classList.remove('rotate-180');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

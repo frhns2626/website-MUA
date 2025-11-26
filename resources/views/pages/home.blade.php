@@ -89,41 +89,301 @@
                 <p class="text-sm md:text-base text-gray-600">Pilih Paket Makeup Sesuai Kebutuhan Anda</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
-                @forelse($packages as $package)
-                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
-                    <div class="bg-gradient-to-r {{ $package->color_gradient ?? 'from-pink-500 to-pink-700' }} p-4">
-                        <h3 class="text-lg md:text-xl font-bold text-white text-center">{{ $package->name }}</h3>
-                    </div>
-                    <div class="p-4 md:p-6 flex-1">
-                        <div class="text-center mb-4 pb-4 border-b border-gray-200">
-                            <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ $package->price ?? '-' }}</p>
-                            <p class="text-xs md:text-sm text-gray-500 mt-1">Harga Paket</p>
+            <!-- Wisuda Packages -->
+            <div class="mb-12 md:mb-16">
+                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Paket Wisuda</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
+                    @forelse($wisudaPackages as $package)
+                        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
+                            <div class="bg-gradient-to-r {{ $package->color_gradient ?? 'from-pink-500 to-pink-700' }} p-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white text-center">{{ $package->name }}</h3>
+                            </div>
+                            <div class="p-4 md:p-6 flex-1">
+                                <div class="text-center mb-4 pb-4 border-b border-gray-200">
+                                    <p class="text-2xl md:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 leading-tight break-words px-1">{{ $package->price ?? '-' }}</p>
+                                    <p class="text-xs md:text-sm text-gray-500 mt-1">Harga Paket</p>
+                                </div>
+                                @if($package->description)
+                                <p class="text-xs md:text-sm text-gray-600 mb-3 text-center">{{ $package->description }}</p>
+                                @endif
+                                @if($package->features && count($package->features) > 0)
+                                <div class="space-y-2">
+                                    <p class="text-xs md:text-sm font-semibold text-gray-700 mb-2">Layanan yang termasuk:</p>
+                                    @foreach($package->features as $feature)
+                                    <div class="flex items-start">
+                                        <svg class="w-4 h-4 text-pink-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ $feature }}</p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
                         </div>
-                        @if($package->description)
-                        <p class="text-xs md:text-sm text-gray-600 mb-3 text-center">{{ $package->description }}</p>
-                        @endif
-                        @if($package->features && count($package->features) > 0)
-                        <div class="space-y-2">
-                            <p class="text-xs md:text-sm font-semibold text-gray-700 mb-2">Layanan yang termasuk:</p>
-                            @foreach($package->features as $feature)
-                            <div class="flex items-start">
-                                <svg class="w-4 h-4 text-pink-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    @empty
+                    <div class="col-span-full bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
+                        <p>Paket wisuda akan segera ditambahkan.</p>
+                        <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
+                    </div>
+                    @endforelse
+                </div>
+            </div>
+            
+            <!-- Wedding Packages -->
+            <div class="mb-12 md:mb-16">
+                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Paket Wedding</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
+                    @forelse($weddingPackages as $package)
+                        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
+                            <div class="bg-gradient-to-r {{ $package->color_gradient ?? 'from-pink-500 to-pink-700' }} p-4">
+                                <h3 class="text-lg md:text-xl font-bold text-white text-center">{{ $package->name }}</h3>
+                            </div>
+                            <div class="p-4 md:p-6 flex-1">
+                                <div class="text-center mb-4 pb-4 border-b border-gray-200">
+                                    <p class="text-2xl md:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 leading-tight break-words px-1">{{ $package->price ?? '-' }}</p>
+                                    <p class="text-xs md:text-sm text-gray-500 mt-1">Harga Paket</p>
+                                </div>
+                                @if($package->description)
+                                <p class="text-xs md:text-sm text-gray-600 mb-3 text-center">{{ $package->description }}</p>
+                                @endif
+                                @if($package->features && count($package->features) > 0)
+                                <div class="space-y-2">
+                                    <p class="text-xs md:text-sm font-semibold text-gray-700 mb-2">Layanan yang termasuk:</p>
+                                    @foreach($package->features as $feature)
+                                    <div class="flex items-start">
+                                        <svg class="w-4 h-4 text-pink-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <p class="text-xs md:text-sm text-gray-600">{{ $feature }}</p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                    <div class="col-span-full bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
+                        <p>Paket wedding akan segera ditambahkan.</p>
+                        <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
+                    </div>
+                    @endforelse
+                </div>
+            </div>
+            
+            <!-- Catatan Tambahan Layanan -->
+            <div class="mt-8 md:mt-12 max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md p-6 md:p-8 border-l-4 border-pink-500">
+                    <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-pink-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Catatan Tambahan
+                    </h3>
+                    <ul class="space-y-3 md:space-y-4 text-sm md:text-base text-gray-700">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Apabila Ronce Melati naik dikenakan biaya tambahan sesuai kenaikan Ronce Melati</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span><strong>Tambah Henna + Kuku Palsu</strong> <span class="text-pink-600 font-semibold">Rp 350.000</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions Section -->
+    <section id="terms" class="py-12 md:py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 md:mb-3 text-center" style="font-family: 'Dancing Script', cursive;">
+                    Firliamakeup 2026
+                </h2>
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 text-center">PRICELIST TAMBAHAN</h3>
+                <p class="text-sm md:text-base text-gray-600 mb-8 md:mb-10 text-center max-w-3xl mx-auto">
+                    PL tambahan hanya berlaku untuk paket Premium, Gold dan Luxury
+                </p>
+                
+                <!-- Pricelist Tambahan -->
+                <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-6 md:p-8 lg:p-10 mb-8 md:mb-10 shadow-md">
+                    <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Layanan Tambahan</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Solo Hijab & Melati</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 600.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Siger Sunda Hijab & Melati</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 400.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Solo / Jogja Paes only</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 750.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Siger Hairdo only</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 500.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Hairdo Pengantin Modern</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 450.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Hairdo Dewasa</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 250.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Busana Sepasang Pengantin</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 800.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Set Kebaya Ibu / Jaga buku</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 150.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Set Beskap / Basofi Bapak</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 150.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Set Baju Pengapit</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 100.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Makeup Anak</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 100.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Makeup Dewasa</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 200.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-sm md:text-base text-gray-700">Pranotocoro</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 600.000</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm md:text-base text-gray-700">Cucuk Lampah</span>
+                            <span class="text-sm md:text-base font-semibold text-pink-600">Rp 750.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Syarat & Ketentuan dan Perhatian -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                    <!-- Syarat & Ketentuan -->
+                    <div class="bg-gray-50 rounded-lg p-6 md:p-8">
+                        <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center">
+                            <svg class="w-6 h-6 md:w-7 md:h-7 text-pink-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Syarat & Ketentuan
+                        </h4>
+                        <ul class="space-y-3 md:space-y-4 text-sm md:text-base text-gray-700">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                 </svg>
-                                <p class="text-xs md:text-sm text-gray-600">{{ $feature }}</p>
-                            </div>
-                            @endforeach
-                        </div>
-                        @endif
+                                <span>Tidak Menerima Request Di Luar Portofolio</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>DP Minimal Satu Juta Rupiah</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Cancel sepihak = DP Hangus 100%</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Pelunasan Max. H+2 Setelah Acara</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Transport Menyesuaikan Lokasi (Grabcar PP)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Wajib Menjaga Busana Dengan Baik</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Bila Terjadi Kerusakan Pada Busana Maka Akan Dikenakan Denda Tergantung Keparahan</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Pergantian Busana Terakhir Max. Jam 2 siang (Lebih Dari Itu Dikenakan Charge Senilai 100.000/Jam)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Jam kerja max. Sampai jam 2 siang. Lebih dari itu terkena charge 100.000/jam</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Busana yg ditinggal harus dikembalikan Max. H+2</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Kuota Harga Melati Solo max.500rb (jika harga melati naik maka akan dikenakan charge sesuai kenaikan harga. Krn harga melati bisa naik setiap hari nya)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Perhatian -->
+                    <div class="bg-red-50 border-2 border-red-200 rounded-lg p-6 md:p-8">
+                        <h4 class="text-xl md:text-2xl font-bold text-red-900 mb-4 md:mb-6 flex items-center">
+                            <svg class="w-6 h-6 md:w-7 md:h-7 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            PERHATIAN
+                        </h4>
+                        <ul class="space-y-3 md:space-y-4 text-sm md:text-base text-red-800">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                <span><strong>STOP KRIM DOKTER H-1 BULAN</strong> (KONSUL DENGAN DOKTER DULU)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                <span><strong>JANGAN MELAKUKAN FACIAL YANG BEREFEK PEELING H-1 BULAN</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>TOLONG SEDIAKAN MEJA, KIPAS (jika tidak ber AC) & RUANGAN KHUSUS MAKEUP DAN GANTI BUSANA PENGANTIN</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                @empty
-                <div class="col-span-full bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
-                    <p>Paket akan segera ditambahkan.</p>
-                    <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
-                </div>
-                @endforelse
             </div>
         </div>
     </section>
@@ -169,65 +429,6 @@
                     <p>Koleksi kebaya akan segera ditambahkan.</p>
                 </div>
                 @endforelse
-            </div>
-        </div>
-    </section>
-
-    <!-- Terms & Conditions Section -->
-    <section class="py-12 md:py-16 lg:py-24 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8 text-center">Syarat & Ketentuan</h2>
-                
-                <div class="bg-gray-50 rounded-lg p-4 md:p-6 lg:p-8 mb-6">
-                    <ul class="space-y-3 md:space-y-4 text-sm md:text-base text-gray-700">
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>DP Minimal 30% Dari Total Layanan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Pelunasan Maksimal H-1 Acara</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Harga Layanan Belum Termasuk Transport</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>Bisa Melakukan Reschedule Maksimal 1x</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-pink-600 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <span>DP Tidak Bisa di Refund</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <div class="bg-pink-50 rounded-lg p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Bronze Package</h3>
-                        <ul class="space-y-2 text-sm md:text-base text-gray-700">
-                            <li>• Bronze Package No Standby & No Retouch</li>
-                        </ul>
-                    </div>
-                    <div class="bg-purple-50 rounded-lg p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Gold Package</h3>
-                        <ul class="space-y-2 text-sm md:text-base text-gray-700">
-                            <li>• Retouch Makeup Dan Hairdo (1x)</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

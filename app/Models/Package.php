@@ -8,6 +8,7 @@ class Package extends Model
 {
     protected $fillable = [
         'name',
+        'category',
         'price',
         'description',
         'features',
@@ -30,5 +31,15 @@ class Package extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order', 'asc');
+    }
+
+    public function scopeWedding($query)
+    {
+        return $query->where('category', 'wedding');
+    }
+
+    public function scopeWisuda($query)
+    {
+        return $query->where('category', 'wisuda');
     }
 }

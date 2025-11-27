@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PortfolioController;
-use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\KebayaController;
 
@@ -24,9 +23,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         // Portfolio Management
         Route::resource('portfolios', PortfolioController::class);
-        
-        // Blog Management
-        Route::resource('blogs', BlogController::class);
         
         // Package Management
         Route::resource('packages', PackageController::class);

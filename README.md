@@ -1,13 +1,12 @@
 # Firliamakeup - Website Jasa Makeup Artist
 
-Website profesional untuk jasa Makeup Artist (MUA) di Demak. Sistem ini menyediakan platform untuk menampilkan portfolio, blog, paket layanan, dan sewa kebaya dengan admin panel yang mudah digunakan.
+Website profesional untuk jasa Makeup Artist (MUA) di Demak. Sistem ini menyediakan platform untuk menampilkan portfolio, paket layanan, dan sewa kebaya dengan admin panel yang mudah digunakan.
 
 ## 🎨 Fitur Utama
 
 ### Public Features
 - **Homepage** - Landing page dengan informasi lengkap tentang jasa MUA
 - **Portfolio Gallery** - Galeri karya makeup dengan kategori
-- **Blog** - Artikel dan tips seputar makeup
 - **Services/Packages** - Daftar paket layanan makeup dengan harga
 - **Kebaya Rental** - Katalog kebaya untuk disewakan
 - **Contact Section** - Informasi kontak dan lokasi
@@ -15,7 +14,6 @@ Website profesional untuk jasa Makeup Artist (MUA) di Demak. Sistem ini menyedia
 ### Admin Panel
 - **Dashboard** - Statistik dan ringkasan aktivitas
 - **Portfolio Management** - Kelola portfolio dengan upload gambar, kategori, dan urutan tampil
-- **Blog Management** - Buat dan edit postingan blog dengan status draft/published
 - **Package Management** - Kelola paket layanan dengan fitur, harga, dan gradient warna
 - **Kebaya Management** - Kelola koleksi kebaya untuk disewakan
 - **Responsive Design** - Admin panel yang fully responsive untuk mobile dan desktop
@@ -199,12 +197,6 @@ composer run test
 - Atur urutan tampil
 - Aktifkan/nonaktifkan portfolio
 
-### Blog Management
-- Buat postingan dengan rich content
-- Upload gambar cover
-- Status draft/published
-- Excerpt untuk preview
-
 ### Package Management
 - Buat paket layanan dengan harga
 - Tambahkan fitur-fitur yang termasuk
@@ -225,7 +217,7 @@ Edit file Tailwind CSS di `resources/css/app.css` atau gunakan Tailwind config.
 
 ### Menambah Menu Sidebar
 
-Edit file `resources/views/components/sidebar.blade.php`
+Edit file `resources/views/admin/components/sidebar.blade.php`
 
 ### Mengubah Logo/Branding
 
@@ -244,7 +236,6 @@ php artisan db:seed
 Available seeders:
 - `AdminUserSeeder` - Create admin user
 - `PortfolioSeeder` - Sample portfolio data
-- `BlogPostSeeder` - Sample blog posts
 - `ServiceSeeder` - Sample services
 - `PackageSeeder` - Sample packages
 - `KebayaSeeder` - Sample kebaya data

@@ -33,7 +33,7 @@
                     <li><a href="#about" class="text-gray-400 hover:text-pink-400 transition-colors">About Us</a></li>
                     <li><a href="#services" class="text-gray-400 hover:text-pink-400 transition-colors">Services</a></li>
                     <li><a href="#gallery" class="text-gray-400 hover:text-pink-400 transition-colors">Gallery</a></li>
-                    <li><a href="#blog" class="text-gray-400 hover:text-pink-400 transition-colors">Blog</a></li>
+                    <li><a href="#sewa-kebaya" class="text-gray-400 hover:text-pink-400 transition-colors">Sewa Kebaya</a></li>
                     <li><a href="#contact" class="text-gray-400 hover:text-pink-400 transition-colors">Contact</a></li>
                 </ul>
             </div>

@@ -21,9 +21,6 @@ class DatabaseSeeder extends Seeder
         // Seed services
         $this->call(ServiceSeeder::class);
         
-        // Seed blog posts
-        $this->call(BlogPostSeeder::class);
-        
         // Seed packages
         $this->call(PackageSeeder::class);
         

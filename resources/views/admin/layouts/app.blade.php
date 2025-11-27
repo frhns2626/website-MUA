@@ -19,7 +19,7 @@
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col md:flex-row">
         <!-- Sidebar -->
-        @include('components.sidebar')
+        @include('admin.components.sidebar')
 
         <!-- Overlay for mobile -->
         <div id="sidebar-overlay" class="hidden md:hidden fixed inset-0 backdrop-blur-sm bg-white/20 z-30 transition-opacity duration-300"></div>

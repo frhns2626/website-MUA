@@ -81,98 +81,112 @@
         </div>
     </section>
 
+    @push('styles')
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .packages-scroll {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+    </style>
+    @endpush
+
     <!-- Services Section -->
-    <section id="services" class="py-12 md:py-16 lg:py-24 bg-gray-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 md:mb-12">
-                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Layanan Kami</h2>
-                <p class="text-sm md:text-base text-gray-600">Pilih Paket Makeup Sesuai Kebutuhan Anda</p>
+    <section id="services" class="py-8 sm:py-12 md:py-16 lg:py-24 bg-gray-50">
+        <div class="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+            <div class="text-center mb-6 sm:mb-8 md:mb-12 px-2">
+                <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4">Layanan Kami</h2>
+                <p class="text-xs sm:text-sm md:text-base text-gray-600">Pilih Paket Makeup Sesuai Kebutuhan Anda</p>
             </div>
             
-            <!-- Wisuda Packages -->
-            <div class="mb-12 md:mb-16">
-                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Paket Wisuda</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
-                    @forelse($wisudaPackages as $package)
-                        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
-                            <div class="bg-gradient-to-r {{ $package->color_gradient ?? 'from-pink-500 to-pink-700' }} p-4">
-                                <h3 class="text-lg md:text-xl font-bold text-white text-center">{{ $package->name }}</h3>
-                            </div>
-                            <div class="p-4 md:p-6 flex-1">
-                                <div class="text-center mb-4 pb-4 border-b border-gray-200">
-                                    <p class="text-2xl md:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 leading-tight break-words px-1">{{ $package->price ?? '-' }}</p>
-                                    <p class="text-xs md:text-sm text-gray-500 mt-1">Harga Paket</p>
-                                </div>
-                                @if($package->description)
-                                <p class="text-xs md:text-sm text-gray-600 mb-3 text-center">{{ $package->description }}</p>
-                                @endif
-                                @if($package->features && count($package->features) > 0)
-                                <div class="space-y-2">
-                                    <p class="text-xs md:text-sm font-semibold text-gray-700 mb-2">Layanan yang termasuk:</p>
-                                    @foreach($package->features as $feature)
-                                    <div class="flex items-start">
-                                        <svg class="w-4 h-4 text-pink-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                        </svg>
-                                        <p class="text-xs md:text-sm text-gray-600">{{ $feature }}</p>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                @endif
-                            </div>
+            <!-- Category Filters -->
+            <div class="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8 pb-3 sm:pb-4 border-b border-gray-300 px-2">
+                <x-category-filter-button category="wisuda" emoji="🎓" label="Paket Wisuda" :isActive="true" />
+                <x-category-filter-button category="wedding" emoji="💒" label="Paket Wedding" />
+            </div>
+            
+            <!-- Packages Container -->
+            <div class="packages-container">
+                <!-- Wisuda Packages -->
+                <div id="wisuda-packages" class="package-category active">
+                    <div class="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide packages-scroll px-2 sm:px-0">
+                        @forelse($wisudaPackages as $package)
+                            <x-package-card :package="$package" />
+                        @empty
+                        <div class="flex-shrink-0 w-full bg-white rounded-lg shadow-md p-4 sm:p-6 text-center text-gray-500">
+                            <p class="text-sm sm:text-base">Paket wisuda akan segera ditambahkan.</p>
+                            <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
                         </div>
-                    @empty
-                    <div class="col-span-full bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
-                        <p>Paket wisuda akan segera ditambahkan.</p>
-                        <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
+                        @endforelse
                     </div>
-                    @endforelse
+                </div>
+                
+                <!-- Wedding Packages -->
+                <div id="wedding-packages" class="package-category hidden">
+                    <div class="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide packages-scroll px-2 sm:px-0">
+                        @forelse($weddingPackages as $package)
+                            <x-package-card :package="$package" />
+                        @empty
+                        <div class="flex-shrink-0 w-full bg-white rounded-lg shadow-md p-4 sm:p-6 text-center text-gray-500">
+                            <p class="text-sm sm:text-base">Paket wedding akan segera ditambahkan.</p>
+                            <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
+                        </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
             
-            <!-- Wedding Packages -->
-            <div class="mb-12 md:mb-16">
-                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Paket Wedding</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
-                    @forelse($weddingPackages as $package)
-                        <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden flex flex-col">
-                            <div class="bg-gradient-to-r {{ $package->color_gradient ?? 'from-pink-500 to-pink-700' }} p-4">
-                                <h3 class="text-lg md:text-xl font-bold text-white text-center">{{ $package->name }}</h3>
-                            </div>
-                            <div class="p-4 md:p-6 flex-1">
-                                <div class="text-center mb-4 pb-4 border-b border-gray-200">
-                                    <p class="text-2xl md:text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 leading-tight break-words px-1">{{ $package->price ?? '-' }}</p>
-                                    <p class="text-xs md:text-sm text-gray-500 mt-1">Harga Paket</p>
-                                </div>
-                                @if($package->description)
-                                <p class="text-xs md:text-sm text-gray-600 mb-3 text-center">{{ $package->description }}</p>
-                                @endif
-                                @if($package->features && count($package->features) > 0)
-                                <div class="space-y-2">
-                                    <p class="text-xs md:text-sm font-semibold text-gray-700 mb-2">Layanan yang termasuk:</p>
-                                    @foreach($package->features as $feature)
-                                    <div class="flex items-start">
-                                        <svg class="w-4 h-4 text-pink-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                        </svg>
-                                        <p class="text-xs md:text-sm text-gray-600">{{ $feature }}</p>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    @empty
-                    <div class="col-span-full bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
-                        <p>Paket wedding akan segera ditambahkan.</p>
-                        <p class="text-xs mt-2">Silakan login ke admin panel untuk menambahkan paket.</p>
-                    </div>
-                    @endforelse
-                </div>
-            </div>
+            @push('scripts')
+            <script>
+                function filterPackages(category, button) {
+                    // Hide all package categories
+                    document.querySelectorAll('.package-category').forEach(el => {
+                        el.classList.add('hidden');
+                        el.classList.remove('active');
+                    });
+                    
+                    // Show selected category
+                    const selectedCategory = document.getElementById(category + '-packages');
+                    if (selectedCategory) {
+                        selectedCategory.classList.remove('hidden');
+                        selectedCategory.classList.add('active');
+                    }
+                    
+                    // Show/hide catatan tambahan based on category
+                    const catatanTambahan = document.getElementById('catatan-tambahan');
+                    if (catatanTambahan) {
+                        catatanTambahan.classList.toggle('hidden', category !== 'wedding');
+                    }
+                    
+                    // Update button states
+                    document.querySelectorAll('.category-filter').forEach(btn => {
+                        btn.classList.remove('bg-pink-50', 'border-pink-500', 'text-pink-700', 'shadow-sm');
+                        btn.classList.add('bg-white', 'border-gray-200', 'text-gray-700');
+                    });
+                    
+                    // Activate clicked button
+                    button.classList.add('bg-pink-50', 'border-pink-500', 'text-pink-700', 'shadow-sm');
+                    button.classList.remove('bg-white', 'border-gray-200', 'text-gray-700');
+                }
+                
+                // Initialize: Hide catatan tambahan on page load (default is wisuda)
+                document.addEventListener('DOMContentLoaded', function() {
+                    const catatanTambahan = document.getElementById('catatan-tambahan');
+                    if (catatanTambahan) {
+                        catatanTambahan.classList.add('hidden');
+                    }
+                });
+            </script>
+            @endpush
             
             <!-- Catatan Tambahan Layanan -->
-            <div class="mt-8 md:mt-12 max-w-4xl mx-auto">
+            <div id="catatan-tambahan" class="mt-8 md:mt-12 max-w-4xl mx-auto hidden">
                 <div class="bg-white rounded-lg shadow-md p-6 md:p-8 border-l-4 border-pink-500">
                     <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center">
                         <svg class="w-5 h-5 md:w-6 md:h-6 text-pink-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -427,43 +441,6 @@
                 @empty
                 <div class="col-span-full text-center text-gray-500 py-12">
                     <p>Koleksi kebaya akan segera ditambahkan.</p>
-                </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="py-12 md:py-16 lg:py-24 bg-gray-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 md:mb-12">
-                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Blog & Tips</h2>
-                <p class="text-sm md:text-base text-gray-600">Tips dan informasi seputar makeup dan perawatan</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-                @forelse($blogPosts as $post)
-                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
-                    @if($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-40 md:h-48 object-cover">
-                    @else
-                        <div class="h-40 md:h-48 bg-gradient-to-br from-pink-200 to-purple-200"></div>
-                    @endif
-                    <div class="p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 line-clamp-2">
-                            {{ $post->title }}
-                        </h3>
-                        <p class="text-sm md:text-base text-gray-600 mb-3 md:mb-4 line-clamp-3">
-                            {{ $post->excerpt }}
-                        </p>
-                        <a href="#" class="text-sm md:text-base text-pink-600 hover:text-pink-700 font-semibold">
-                            Baca Selengkapnya →
-                        </a>
-                    </div>
-                </article>
-                @empty
-                <div class="col-span-full text-center text-gray-500 py-12">
-                    <p>Blog posts akan segera ditambahkan.</p>
                 </div>
                 @endforelse
             </div>

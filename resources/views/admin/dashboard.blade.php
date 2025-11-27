@@ -34,30 +34,6 @@
             </p>
         </div>
 
-        <!-- Blog Posts Card -->
-        <div class="bg-white p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-blue-500">
-            <div class="flex items-center justify-between mb-3">
-                <div class="p-3 bg-blue-100 rounded-lg">
-                    <svg class="w-6 h-6 md:w-7 md:h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                </div>
-                <a href="{{ route('admin.blogs.index') }}" class="text-gray-400 hover:text-blue-600 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-            <h3 class="text-gray-600 text-xs md:text-sm font-semibold mb-1">Total Postingan Blog</h3>
-            <p class="text-2xl md:text-3xl font-bold text-blue-600 mb-1">{{ $stats['blog_posts'] }}</p>
-            <p class="text-xs md:text-sm text-gray-500">
-                <span class="inline-flex items-center">
-                    <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
-                    {{ $stats['published_posts'] }} Diterbitkan
-                </span>
-            </p>
-        </div>
-
         <!-- Packages Card -->
         <div class="bg-white p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-purple-500">
             <div class="flex items-center justify-between mb-3">
@@ -78,6 +54,30 @@
                 <span class="inline-flex items-center">
                     <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
                     {{ $stats['active_packages'] }} Aktif
+                </span>
+            </p>
+        </div>
+
+        <!-- Kebaya Card -->
+        <div class="bg-white p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-orange-500">
+            <div class="flex items-center justify-between mb-3">
+                <div class="p-3 bg-orange-100 rounded-lg">
+                    <svg class="w-6 h-6 md:w-7 md:h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                </div>
+                <a href="{{ route('admin.kebayas.index') }}" class="text-gray-400 hover:text-orange-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="text-gray-600 text-xs md:text-sm font-semibold mb-1">Total Kebaya</h3>
+            <p class="text-2xl md:text-3xl font-bold text-orange-600 mb-1">{{ $stats['kebayas'] }}</p>
+            <p class="text-xs md:text-sm text-gray-500">
+                <span class="inline-flex items-center">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                    {{ $stats['active_kebayas'] }} Aktif
                 </span>
             </p>
         </div>
@@ -127,30 +127,30 @@
             @endif
         </div>
 
-        <!-- Recent Blog Posts -->
+        <!-- Recent Kebayas -->
         <div class="bg-white p-5 md:p-6 rounded-xl shadow-md">
             <div class="flex items-center justify-between mb-4 md:mb-5">
-                <h2 class="text-lg md:text-xl font-bold text-gray-800">Postingan Blog Terbaru</h2>
-                <a href="{{ route('admin.blogs.index') }}" 
-                   class="text-xs md:text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                <h2 class="text-lg md:text-xl font-bold text-gray-800">Kebaya Terbaru</h2>
+                <a href="{{ route('admin.kebayas.index') }}" 
+                   class="text-xs md:text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors">
                     Lihat Semua →
                 </a>
             </div>
             
-            @if($recent_posts->count() > 0)
+            @if($recent_kebayas->count() > 0)
                 <div class="space-y-3">
-                    @foreach($recent_posts as $post)
+                    @foreach($recent_kebayas as $kebaya)
                         <div class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm md:text-base font-medium text-gray-800 truncate">
-                                    {{ $post->title }}
+                                    {{ $kebaya->title }}
                                 </p>
                                 <p class="text-xs text-gray-500 mt-0.5">
-                                    {{ $post->created_at->format('d M Y') }}
+                                    {{ $kebaya->created_at->format('d M Y') }}
                                 </p>
                             </div>
-                            <span class="ml-3 px-2.5 py-1 text-xs font-medium rounded-full {{ $post->is_published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
-                                {{ $post->is_published ? 'Diterbitkan' : 'Draft' }}
+                            <span class="ml-3 px-2.5 py-1 text-xs font-medium rounded-full {{ $kebaya->is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
+                                {{ $kebaya->is_active ? 'Aktif' : 'Tidak Aktif' }}
                             </span>
                         </div>
                     @endforeach
@@ -158,15 +158,16 @@
             @else
                 <div class="text-center py-8">
                     <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                     </svg>
-                    <p class="text-gray-500 text-sm">Belum ada postingan blog.</p>
-                    <a href="{{ route('admin.blogs.create') }}" 
-                       class="inline-block mt-3 text-sm text-blue-600 hover:text-blue-700 font-medium">
-                        Buat Postingan Pertama →
+                    <p class="text-gray-500 text-sm">Belum ada kebaya.</p>
+                    <a href="{{ route('admin.kebayas.create') }}" 
+                       class="inline-block mt-3 text-sm text-orange-600 hover:text-orange-700 font-medium">
+                        Tambah Kebaya Pertama →
                     </a>
                 </div>
             @endif
         </div>
+
     </div>
 @endsection

@@ -4,7 +4,7 @@
         ['route' => '#about', 'label' => 'About Us', 'isRoute' => false],
         ['route' => '#services', 'label' => 'Services', 'isRoute' => false],
         ['route' => '#gallery', 'label' => 'Gallery', 'isRoute' => false],
-        ['route' => '#blog', 'label' => 'Blog', 'isRoute' => false],
+        ['route' => '#sewa-kebaya', 'label' => 'Sewa Kebaya', 'isRoute' => false],
         ['route' => '#contact', 'label' => 'Contact Us', 'isRoute' => false, 'isButton' => true],
     ];
 @endphp

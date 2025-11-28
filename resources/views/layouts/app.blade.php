@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jasa Makeup Artist Demak - MUA Professional untuk Wedding, Prewedding, Wisuda, Sweet Seventeen dan acara lainnya">
-    
+
     <title>@yield('title', 'Firliamakeup - Jasa Makeup Artist Demak')</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('favicon.ico') }}">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     @stack('styles')
 </head>
+
 <body class="font-sans antialiased bg-white text-gray-900">
     @include('components.header')
-    
-    <main>
+
+    <main class="pt-16 md:pt-0">
         @yield('content')
     </main>
-    
+
     @include('components.footer')
-    
+
     <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" 
-            type="button"
-            class="scroll-to-top-btn hidden fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-pink-600 text-white p-3 md:p-4 rounded-full shadow-lg hover:bg-pink-700 transition-all duration-300 z-40 opacity-0 translate-y-4 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
-            aria-label="Scroll to top">
+    <button id="scroll-to-top"
+        type="button"
+        class="scroll-to-top-btn hidden fixed bottom-6 right-6 md:bottom-8 md:right-8 bg-pink-600 text-white p-3 md:p-4 rounded-full shadow-lg hover:bg-pink-700 transition-all duration-300 z-40 opacity-0 translate-y-4 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+        aria-label="Scroll to top">
         <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
     </button>
-    
+
     @stack('scripts')
-    
+
     <!-- Scripts -->
     <script>
         (function() {
@@ -117,7 +119,7 @@
             // Secret Footer Trigger
             const handleFooterClick = () => {
                 footerClickCount++;
-                
+
                 clearTimeout(footerClickTimeout);
                 footerClickTimeout = setTimeout(() => {
                     footerClickCount = 0;
@@ -133,4 +135,5 @@
         })();
     </script>
 </body>
+
 </html>

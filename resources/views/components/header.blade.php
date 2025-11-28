@@ -9,7 +9,7 @@
     ];
 @endphp
 
-<header id="main-header" class="bg-white shadow-sm sticky top-0 z-50 transition-transform duration-300 ease-in-out">
+<header id="main-header" class="bg-white shadow-sm fixed md:sticky top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 md:h-20">
             <!-- Logo -->
@@ -199,8 +199,16 @@
             }
         });
 
-        // Header Hide/Show on Scroll
+        // Header Hide/Show on Scroll (Desktop only)
         window.addEventListener('scroll', () => {
+            // Only apply scroll hide behavior on desktop (md and above)
+            const isMobile = window.innerWidth < 768; // md breakpoint
+            if (isMobile) {
+                // On mobile, always show header (fixed)
+                header?.classList.remove('-translate-y-full');
+                return;
+            }
+            
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
             if (scrollTop > SCROLL_THRESHOLD) {
@@ -217,6 +225,14 @@
             }
             
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+        
+        // Handle window resize to reset header state
+        window.addEventListener('resize', () => {
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                header?.classList.remove('-translate-y-full');
+            }
         });
     })();
 </script>
